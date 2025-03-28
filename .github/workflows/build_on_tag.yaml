@@ -1,0 +1,72 @@
+name: Build and release binaries based on Ubuntu 24.04 for AMD64 and ARM64
+on:
+  push:
+    tags:        
+      - '*'
+permissions:
+  contents: write
+
+jobs:
+  Build-Binaries:
+    strategy:
+      matrix:
+        target: [ubuntu-24.04, ubuntu-24.04-arm]
+        include:
+          - target: ubuntu-24.04
+            arch: amd64
+          - target: ubuntu-24.04-arm
+            arch: arm64
+    runs-on: ${{matrix.target}}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref_name }}
+
+      - name: Install dependencies
+        run: |
+          apt update && apt install -y \
+            libnl-genl-3-dev \
+            build-essential \
+            pkg-config \
+            libssl-dev \
+            libdbus-1-dev \
+            libnl-route-3-dev \
+            libsqlite3-dev
+
+      - name: Copy defconfigs to .config
+        run: |
+          cp hostapd/defconfig hostapd/.config && \
+          cp wpa_supplicant/defconfig wpa_supplicant/.config
+
+      - name: Build and pack binaries
+        run: |
+          make
+          tar -czf hostapd-${{matrix.arch}}.tar.gz -C hostapd hostapd hostapd_cli
+          tar -czf wpa_supplicant-${{matrix.arch}}.tar.gz -C wpa_supplicant wpa_supplicant wpa_cli wpa_passphrase
+
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{matrix.arch}} Build
+          path: |
+            hostapd-${{matrix.arch}}.tar.gz
+            wpa_supplicant-${{matrix.arch}}.tar.gz
+          compression-level: 0
+  
+  Make-Release:
+    runs-on: ubuntu-24.04
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+      - name: Download artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: build
+
+      - name: Create release
+        run: |
+          gh release create "${{ github.ref_name }}" \
+            --repo="$GITHUB_REPOSITORY" \
+            --title="${{ github.ref_name }}" \
+            --generate-notes \
+            ./build/*.tar.gz
