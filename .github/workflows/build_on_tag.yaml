@@ -24,7 +24,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          apt update && apt install -y \
+          sudo apt update && sudo apt install -y \
             libnl-genl-3-dev \
             build-essential \
             pkg-config \
@@ -54,6 +54,7 @@ jobs:
           compression-level: 0
   
   Make-Release:
+    needs: Build-Binaries
     runs-on: ubuntu-24.04
     env:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
