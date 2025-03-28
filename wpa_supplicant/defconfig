@@ -26,7 +26,7 @@
 # replacement for WEXT and its use allows wpa_supplicant to properly control
 # the driver to improve existing functionality like roaming and to support new
 # functionality.
-CONFIG_DRIVER_WEXT=y
+#CONFIG_DRIVER_WEXT=y
 
 # Driver interface for Linux drivers using the nl80211 kernel interface
 CONFIG_DRIVER_NL80211=y
@@ -71,7 +71,7 @@ CONFIG_LIBNL32=y
 # CONFIG_USE_NDISUIO=y
 
 # Driver interface for wired Ethernet drivers
-CONFIG_DRIVER_WIRED=y
+#CONFIG_DRIVER_WIRED=y
 
 # Driver interface for MACsec capable Qualcomm Atheros drivers
 #CONFIG_DRIVER_MACSEC_QCA=y
@@ -194,20 +194,20 @@ CONFIG_PKCS12=y
 
 # Smartcard support (i.e., private key on a smartcard), e.g., with openssl
 # engine.
-CONFIG_SMARTCARD=y
+#CONFIG_SMARTCARD=y
 
 # PC/SC interface for smartcards (USIM, GSM SIM)
 # Enable this if EAP-SIM or EAP-AKA is included
 #CONFIG_PCSC=y
 
 # Support HT overrides (disable HT/HT40, mask MCS rates, etc.)
-#CONFIG_HT_OVERRIDES=y
+CONFIG_HT_OVERRIDES=y
 
 # Support VHT overrides (disable VHT, mask MCS rates, etc.)
-#CONFIG_VHT_OVERRIDES=y
+CONFIG_VHT_OVERRIDES=y
 
 # Support HE overrides
-#CONFIG_HE_OVERRIDES=y
+CONFIG_HE_OVERRIDES=y
 
 # Development testing
 #CONFIG_EAPOL_TEST=y
@@ -258,7 +258,7 @@ CONFIG_CTRL_IFACE=y
 CONFIG_SAE=y
 
 # SAE Public Key, WPA3-Personal
-#CONFIG_SAE_PK=y
+CONFIG_SAE_PK=y
 
 # Disable scan result processing (ap_scan=1) to save code size by about 1 kB.
 # This can be used if ap_scan=1 mode is never enabled.
@@ -331,21 +331,21 @@ CONFIG_BACKEND=file
 # internal = Internal TLSv1 implementation (experimental)
 # linux = Linux kernel AF_ALG and internal TLSv1 implementation (experimental)
 # none = Empty template
-#CONFIG_TLS=openssl
+CONFIG_TLS=openssl
 
 # TLS-based EAP methods require at least TLS v1.0. Newer version of TLS (v1.1)
 # can be enabled to get a stronger construction of messages when block ciphers
 # are used. It should be noted that some existing TLS v1.0 -based
 # implementation may not be compatible with TLS v1.1 message (ClientHello is
 # sent prior to negotiating which version will be used)
-#CONFIG_TLSV11=y
+CONFIG_TLSV11=y
 
 # TLS-based EAP methods require at least TLS v1.0. Newer version of TLS (v1.2)
 # can be enabled to enable use of stronger crypto algorithms. It should be
 # noted that some existing TLS v1.0 -based implementation may not be compatible
 # with TLS v1.2 message (ClientHello is sent prior to negotiating which version
 # will be used)
-#CONFIG_TLSV12=y
+CONFIG_TLSV12=y
 
 # Select which ciphers to use by default with OpenSSL if the user does not
 # specify them.
@@ -432,7 +432,7 @@ CONFIG_DEBUG_SYSLOG=y
 # to the Linux kernel tracing facility. This helps debug the entire stack by
 # making it easy to record everything happening from the driver up into the
 # same file, e.g., using trace-cmd.
-#CONFIG_DEBUG_LINUX_TRACING=y
+CONFIG_DEBUG_LINUX_TRACING=y
 
 # Add support for writing debug log to Android logcat instead of standard
 # output
@@ -510,7 +510,7 @@ CONFIG_IEEE80211AX=y
 # Note: This is experimental and work in progress. The definitions are still
 # subject to change and this should not be expected to interoperate with the
 # final IEEE 802.11be version.
-#CONFIG_IEEE80211BE=y
+CONFIG_IEEE80211BE=y
 
 # Wireless Network Management (IEEE Std 802.11v-2011)
 # Note: This is experimental and not complete implementation.
@@ -630,7 +630,7 @@ CONFIG_IBSS_RSN=y
 #CONFIG_PMKSA_CACHE_EXTERNAL=y
 
 # Mesh Networking (IEEE 802.11s)
-#CONFIG_MESH=y
+CONFIG_MESH=y
 
 # Background scanning modules
 # These can be used to request wpa_supplicant to perform background scanning
@@ -644,7 +644,7 @@ CONFIG_BGSCAN_SIMPLE=y
 
 # Opportunistic Wireless Encryption (OWE)
 # Experimental implementation of draft-harkins-owe-07.txt
-#CONFIG_OWE=y
+CONFIG_OWE=y
 
 # Device Provisioning Protocol (DPP) (also known as Wi-Fi Easy Connect)
 CONFIG_DPP=y
